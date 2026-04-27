@@ -1,55 +1,76 @@
-// app/not-found.tsx
 "use client";
 
 import Link from "next/link";
+import { motion } from "framer-motion";
+import { Home, Search, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { ArrowLeftCircle } from "lucide-react";
 
 export default function NotFound() {
   return (
-    <div className="flex items-center justify-center min-h-screen   from-gray-100 via-gray-50 to-white p-6">
-      <Card className="max-w-lg w-full text-center shadow-xl border border-gray-200 bg-white/80 backdrop-blur-md animate-fadeIn rounded-3xl">
-        <CardContent className="py-12">
-          <h1 className="text-7xl md:text-9xl font-extrabold mb-4 text-red-600 drop-shadow-sm">
-            404
-          </h1>
-          <h2 className="text-2xl md:text-3xl font-semibold mb-3 text-gray-800">
-            Oops! Page Not Found
-          </h2>
-          <p className="text-md md:text-lg mb-8 text-gray-600 text-center">
-            Uh-oh! This route doesn’t exist.
-            <br />
-            Looks like you took a wrong turn.
-          </p>
-          <Link href="/" className="flex justify-center">
-            <Button
-              variant="default"
-              className="bg-[#db1a1a] text-white hover:bg-red-600 px-6 py-3 text-lg font-medium cursor-pointer flex items-center gap-2 transition-transform hover:scale-105 "
-            >
-              <ArrowLeftCircle className="w-5 h-5" />
-              Go Back Home
-            </Button>
-          </Link>
-        </CardContent>
-      </Card>
+    <main className="min-h-screen bg-neutral-50 dark:bg-neutral-950 flex flex-col items-center justify-center p-4 text-center relative overflow-hidden font-sans">
+      {/* Background Decor */}
+      <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-emerald-500/10 blur-[120px] rounded-full pointer-events-none" />
+      <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-teal-500/10 blur-[120px] rounded-full pointer-events-none" />
 
-      {/* Custom animation */}
-      <style jsx>{`
-        @keyframes fadeIn {
-          from {
-            opacity: 0;
-            transform: translateY(20px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-        .animate-fadeIn {
-          animation: fadeIn 0.8s ease-out forwards;
-        }
-      `}</style>
-    </div>
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+        className="z-10 space-y-8 max-w-lg"
+      >
+        <div className="relative inline-block">
+          <motion.div
+            animate={{
+              rotate: [0, 10, -10, 0],
+              scale: [1, 1.1, 1],
+            }}
+            transition={{
+              duration: 4,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+            className="text-9xl font-black text-emerald-500/20 dark:text-emerald-500/10 select-none"
+          >
+            404
+          </motion.div>
+          <div className="absolute inset-0 flex items-center justify-center">
+            <Sparkles className="w-16 h-16 text-emerald-500 animate-pulse" />
+          </div>
+        </div>
+
+        <div className="space-y-4">
+          <h1 className="text-4xl font-extrabold text-neutral-900 dark:text-neutral-50 tracking-tight">
+            Oops! This Page Got <span className="text-emerald-500">Lost</span>{" "}
+            in the Cloud
+          </h1>
+          <p className="text-lg text-neutral-600 dark:text-neutral-400">
+            Even the most advanced AI couldn&apos;t find what you&lsquo;re
+            looking for. Maybe it&apos;s still being generated?
+          </p>
+        </div>
+
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
+          <Button
+            asChild
+            className="h-12 px-8 rounded-full bg-emerald-500 hover:bg-emerald-600 text-white font-bold transition-all shadow-lg hover:shadow-emerald-500/20"
+          >
+            <Link href="/" className="flex items-center gap-2">
+              <Home className="w-5 h-5" />
+              Go Back Home
+            </Link>
+          </Button>
+          <Button
+            variant="outline"
+            asChild
+            className="h-12 px-8 rounded-full border-neutral-200 dark:border-neutral-800"
+          >
+            <Link href="/" className="flex items-center gap-2">
+              <Search className="w-5 h-5" />
+              Try a New Prompt
+            </Link>
+          </Button>
+        </div>
+      </motion.div>
+    </main>
   );
 }

@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import "./globals.css";
 import MainProviders from "@/Providers/MainProviders";
-import Provider from "@/Providers/Provider";
 import { Toaster } from "sonner";
 
 const poppins = Poppins({
@@ -12,9 +11,9 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: "sktch Labs",
+  title: "AIVatar - Premium AI Avatar Generator",
   description:
-    "Design amazing digital experiences that create more happy in the world.",
+    "Transform your ideas into stunning, high-quality digital avatars in seconds with our advanced AI generation engine.",
 };
 
 export default function RootLayout({
@@ -25,9 +24,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${poppins.variable} antialiased`}>
-        <MainProviders>
-          <Provider> {children} </Provider>
-        </MainProviders>
+        <MainProviders>{children}</MainProviders>
         <Toaster position="top-right" closeButton />
       </body>
     </html>

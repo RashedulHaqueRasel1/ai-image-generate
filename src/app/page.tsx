@@ -62,7 +62,13 @@ export default function Home() {
       const url = window.URL.createObjectURL(blob);
       const link = document.createElement("a");
       link.href = url;
-      link.download = `avatar-${Date.now()}.png`;
+      const now = new Date();
+      const dateStr = now.toISOString().split("T")[0]; // YYYY-MM-DD
+      const timeStr =
+        now.getHours().toString().padStart(2, "0") +
+        "-" +
+        now.getMinutes().toString().padStart(2, "0"); // HH-mm
+      link.download = `ai-image-${dateStr}_${timeStr}.png`;
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);

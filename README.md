@@ -1,514 +1,92 @@
-# 🚀 Next.js Full-Stack Template
+# AIVatar - Premium AI Avatar Generator
 
-A production-ready, opinionated **Next.js 16** template with a clean feature-driven architecture, authentication, typed API layer, and developer tooling pre-configured out of the box.
+![AIVatar Logo](src/app/icon.png)
 
----
+AIVatar is a high-end, single-page web application designed to generate unique digital avatars using advanced AI. Built with security, privacy, and aesthetic excellence in mind, AIVatar offers a seamless experience for creating your digital soul.
 
-## 📋 Table of Contents
+## ✨ Features
 
-- [Tech Stack](#tech-stack)
-- [Project Structure](#project-structure)
-- [Getting Started](#getting-started)
-- [Environment Variables](#environment-variables)
-- [Authentication](#authentication)
-- [API Layer](#api-layer)
-- [Feature Pattern](#feature-pattern)
-- [State Management](#state-management)
-- [Routing & Middleware](#routing--middleware)
-- [UI Components](#ui-components)
-- [Developer Tooling](#developer-tooling)
-- [Scripts Reference](#scripts-reference)
-- [Commit Convention](#commit-convention)
+- **Premium UI/UX:** A stunning, responsive design featuring glassmorphism, dynamic background gradients, and smooth Framer Motion animations.
+- **Privacy Focused:**
+  - **Server-Side Proxying:** All external API calls are handled on the server, hiding the source URLs and sensitive integration details from the browser's Network tab.
+  - **Payload Obfuscation:** Prompt data is Base64 encoded before transmission to prevent casual inspection.
+  - **Binary Streaming:** Images are streamed directly as binary blobs, ensuring the original external image URL never reaches the client.
+- **Mobile Friendly:** Fully responsive layout that adapts gracefully from large desktop monitors to mobile screens.
+- **Instant Actions:** One-click download with clean naming (`ai-image-YYYY-MM-DD_HH-mm.png`) and quick "Generate Another" functionality.
+- **Prompt Suggestions:** Quick-action buttons for common styles like "3D Cartoon", "Neon Cyberpunk", and more.
 
----
+## 🚀 Tech Stack
 
-## 🧰 Tech Stack
+- **Framework:** [Next.js 15 (App Router)](https://nextjs.org/)
+- **Styling:** [Tailwind CSS 4](https://tailwindcss.com/)
+- **Animations:** [Framer Motion](https://www.framer.com/motion/)
+- **Icons:** [Lucide React](https://lucide.dev/)
+- **Components:** [Radix UI](https://www.radix-ui.com/) (Shadcn UI)
+- **API Handling:** [Axios](https://axios-http.com/)
+- **State & Feedback:** [Sonner](https://sonner.stevenly.cc/) (Toasts)
 
-| Category         | Library / Tool                                 | Version        |
-| ---------------- | ---------------------------------------------- | -------------- |
-| Framework        | [Next.js](https://nextjs.org/)                 | 16.1.4         |
-| Language         | TypeScript                                     | ^5             |
-| Styling          | Tailwind CSS                                   | ^4             |
-| UI Components    | [Shadcn UI](https://ui.shadcn.com/) + Radix UI | Latest         |
-| Icons            | Lucide React                                   | ^0.553.0       |
-| Authentication   | [NextAuth.js](https://next-auth.js.org/)       | ^4.24          |
-| Data Fetching    | Axios + TanStack Query                         | ^1.13 / ^5.90  |
-| Forms            | React Hook Form + Zod                          | ^7.66 / ^3.25  |
-| State Management | Zustand                                        | ^5.0           |
-| Rich Text Editor | Tiptap                                         | ^3.17          |
-| Animations       | Framer Motion                                  | ^12            |
-| Notifications    | Sonner                                         | ^2.0           |
-| Testing          | Jest + Testing Library                         | ^30            |
-| Linting          | ESLint + Prettier                              | ^9 / ^3        |
-| Commit Hooks     | Husky + Lint-staged + Commitlint               | ^8 / ^16 / ^20 |
-
----
-
-## 📁 Project Structure
-
-```
-src/
-├── app/                        # Next.js App Router
-│   ├── api/
-│   │   └── auth/
-│   │       └── [...nextauth]/  # NextAuth route handler
-│   │           └── route.ts
-│   ├── layout.tsx              # Root layout with global providers
-│   ├── page.tsx                # Home page
-│   ├── globals.css             # Global styles
-│   └── not-found.tsx           # Custom 404 page
-│
-├── Providers/
-│   ├── MainProviders.tsx       # TanStack Query client provider
-│   └── Provider.tsx            # NextAuth SessionProvider
-│
-├── components/
-│   ├── ui/                     # Shadcn UI primitives (Button, Input, Dialog, etc.)
-│   └── shared/                 # Cross-feature shared components
-│
-├── features/
-│   ├── auth/
-│   │   └── api/
-│   │       └── refresh-token.api.ts  # Token refresh used by NextAuth
-│   └── sample-feature/         # Reference architecture — copy this for new features
-│       ├── api/                # API call functions (uses src/lib/api.ts)
-│       ├── components/         # Feature-specific UI components
-│       ├── hooks/              # TanStack Query custom hooks
-│       └── types.ts            # Feature TypeScript types
-│
-├── hooks/                      # Global reusable hooks
-│   └── readme.md
-│
-├── lib/
-│   ├── api.ts                  # Axios instance with auth interceptors
-│   ├── utils.ts                # Utility functions (cn, etc.)
-│   ├── indexed-db-storage.ts   # IndexedDB helpers
-│   └── readme.md
-│
-├── store/
-│   ├── ui.store.ts             # Global UI state (Zustand)
-│   └── readme.md
-│
-├── types/
-│   ├── next-auth.d.ts          # Extended NextAuth TypeScript types
-│   └── readme.md
-│
-├── tests/                      # Jest unit test files
-│
-└── proxy.ts                    # Next.js middleware for RBAC routing
-```
-
----
-
-## ⚡ Getting Started
+## 🛠️ Getting Started
 
 ### Prerequisites
 
-- Node.js 18+
-- npm or pnpm
+- Node.js 18.x or later
+- npm or yarn
 
-### 1. Clone the repository
+### Installation
 
-```bash
-git clone <your-repo-url>
-cd <project-folder>
-```
+1.  **Clone the repository:**
 
-### 2. Install dependencies
+    ```bash
+    git clone https://github.com/RashedulHaqueRasel1/ai-image-generate.git
+    cd ai-image-generate
+    ```
 
-```bash
-npm install
-```
+2.  **Install dependencies:**
 
-### 3. Set up environment variables
+    ```bash
+    npm install
+    ```
 
-```bash
-cp example.env.local .env.local
-```
+3.  **Set up environment variables:**
+    Create a `.env.local` file in the root directory and add your API URL:
 
-Edit `.env.local` with your actual values (see [Environment Variables](#environment-variables)).
+    ```env
+    NEXT_PUBLIC_API_URL=***
+    ```
 
-### 4. Run the development server
+4.  **Run the development server:**
 
-```bash
-npm run dev
-```
+    ```bash
+    npm run dev
+    ```
 
-Open [http://localhost:3000](http://localhost:3000) in your browser.
+5.  **Open the app:**
+    Navigate to [http://localhost:3000](http://localhost:3000) in your browser.
 
----
+## 🔒 Security Architecture
 
-## 🔑 Environment Variables
+AIVatar implements a robust security layer between the user and the external AI engine:
 
-Copy `example.env.local` to `.env.local` and fill in the following:
+1.  **Client:** Encodes the prompt and sends a `POST` request to the internal `/api/generate` route.
+2.  **Server:** Decodes the prompt, fetches the image URL from the external API, and then fetches the actual image data.
+3.  **Response:** The server streams the raw binary image data back to the client as a blob, keeping all external URLs completely hidden from the browser's network logs.
 
-| Variable                 | Required | Description                                                                                |
-| ------------------------ | -------- | ------------------------------------------------------------------------------------------ |
-| `NEXT_PUBLIC_API_URL`    | ✅       | Base URL of your backend REST API (e.g. `http://localhost:5001/api/v1`)                    |
-| `NEXTAUTH_SECRET`        | ✅       | A random secret string used to encrypt JWT sessions. Generate with: `openssl rand -hex 32` |
-| `NEXTAUTH_URL`           | ✅       | The canonical URL of your deployed app (e.g. `http://localhost:3000` for local)            |
-| `NEXT_PUBLIC_SOCKET_URL` | ⬜       | Optional WebSocket server URL                                                              |
+## 🔗 Links
 
-> **Security**: Never commit your `.env.local` file. It is already listed in `.gitignore`.
-
----
-
-## 🔐 Authentication
-
-Authentication is handled via **NextAuth.js v4** using its **Credentials Provider** strategy.
-
-### How It Works
-
-1. The user submits their email and password.
-2. NextAuth calls your backend `POST /auth/login` endpoint.
-3. On success, the user object and `accessToken` are stored in a JWT session.
-4. The JWT is automatically refreshed when it expires (1 hour default), via `POST /auth/refresh-access-token`.
-5. If the refresh fails, the session is destroyed and the user is signed out.
-
-### Session Shape
-
-The session is extended to include custom fields. The types are declared in `src/types/next-auth.d.ts`:
-
-```typescript
-session.user = {
-  id: string;
-  name: string;
-  email: string;
-  image: string;    // Maps to profileImage from backend
-  role: string;     // e.g. "ADMIN" | "USER"
-};
-session.accessToken  = string;
-session.refreshToken = string;
-```
-
-### Accessing the Session
-
-**Client-side (in a Client Component):**
-
-```tsx
-"use client";
-import { useSession } from "next-auth/react";
-
-export default function MyComponent() {
-  const { data: session } = useSession();
-  // session.accessToken, session.user.role, etc.
-}
-```
-
-**Server-side (in a Server Component or API Route):**
-
-```tsx
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-
-const session = await getServerSession(authOptions);
-```
-
----
-
-## 🌐 API Layer
-
-All HTTP requests go through the centralized **Axios instance** at `src/lib/api.ts`.
-
-### Features
-
-- **Auto-auth injection**: Every request automatically includes the `Bearer` token from the active NextAuth session.
-- **Auto-retry on 401**: If a request fails with a 401, it tries to use the refreshed token from the session and retries once.
-- **Auto-signout**: If the token refresh has failed (`RefreshAccessTokenError`), the user is immediately signed out and redirected to `/login`.
-
-### Usage
-
-```typescript
-import { api } from "@/lib/api";
-
-// Example GET request
-const response = await api.get("/users");
-
-// Example POST request
-const response = await api.post("/users", { name: "John" });
-```
-
-> **Note**: You never need to manually set `Authorization` headers. The interceptor handles it globally.
-
----
-
-## 🧩 Feature Pattern
-
-All business logic lives inside `src/features/`. Each feature is a self-contained module with a consistent internal structure. Use `src/features/sample-feature` as your starting point.
-
-### Structure
-
-```
-src/features/your-feature/
-├── api/
-│   └── your-feature.api.ts   # Raw API call functions
-├── components/
-│   └── YourComponent.tsx     # Feature UI components
-├── hooks/
-│   └── useYourFeature.ts     # TanStack Query hooks
-└── types.ts                  # TypeScript types for this feature
-```
-
-### Step-by-Step: Adding a New Feature
-
-**1. Define your types** (`types.ts`):
-
-```typescript
-export interface User {
-  id: string;
-  name: string;
-  email: string;
-}
-```
-
-**2. Write your API function** (`api/users.api.ts`):
-
-```typescript
-import { api } from "@/lib/api";
-import { User } from "../types";
-
-export async function getUsers(): Promise<User[]> {
-  const res = await api.get("/users");
-  return res.data;
-}
-```
-
-**3. Create a TanStack Query hook** (`hooks/useUsers.ts`):
-
-```typescript
-import { useQuery } from "@tanstack/react-query";
-import { getUsers } from "../api/users.api";
-
-export function useUsers() {
-  return useQuery({
-    queryKey: ["users"],
-    queryFn: getUsers,
-  });
-}
-```
-
-**4. Consume in a component** (`components/UserList.tsx`):
-
-```tsx
-"use client";
-import { useUsers } from "../hooks/useUsers";
-
-export default function UserList() {
-  const { data, isLoading, error } = useUsers();
-
-  if (isLoading) return <p>Loading...</p>;
-  if (error) return <p>Error loading users.</p>;
-
-  return (
-    <ul>
-      {data?.map((user) => (
-        <li key={user.id}>{user.name}</li>
-      ))}
-    </ul>
-  );
-}
-```
-
-**5. Add a route** in `src/app/(your-group)/your-route/page.tsx` and import the component.
-
----
-
-## 🗂️ State Management
-
-Global UI state is managed with **Zustand** in `src/store/`.
-
-### Adding a New Store
-
-```typescript
-// src/store/example.store.ts
-import { create } from "zustand";
-
-interface ExampleState {
-  count: number;
-  increment: () => void;
-}
-
-export const useExampleStore = create<ExampleState>((set) => ({
-  count: 0,
-  increment: () => set((state) => ({ count: state.count + 1 })),
-}));
-```
-
-> **Convention**: Keep stores small and focused. One store per concern (e.g. `ui.store.ts`, `sidebar.store.ts`).
-
----
-
-## 🛡️ Routing & Middleware
-
-The `src/proxy.ts` file is a **Next.js Middleware** that runs at the edge before any page renders. It handles **Role-Based Access Control (RBAC)**.
-
-### Current Rules
-
-| Condition                                | Action                               |
-| ---------------------------------------- | ------------------------------------ |
-| Unauthenticated user visits `/dashboard` | Redirect to `/login?callbackUrl=...` |
-| Non-admin user visits `/dashboard`       | Redirect to `/`                      |
-| All other requests                       | `next()` — passes through            |
-
-### Customizing Routes
-
-Edit the matcher in `src/proxy.ts` to control which paths trigger the middleware:
-
-```typescript
-export const config = {
-  matcher: [
-    "/((?!api|_next/static|_next/image|assets|favicon.ico|sitemap.xml|robots.txt).*)",
-  ],
-};
-```
-
-### Adding Route Groups
-
-Create a folder with parentheses in `src/app/` to group routes without affecting the URL:
-
-```
-src/app/
-├── (dashboard)/
-│   └── dashboard/
-│       └── page.tsx    →  URL: /dashboard
-├── (auth)/
-│   └── login/
-│       └── page.tsx    →  URL: /login
-```
-
----
-
-## 🎨 UI Components
-
-All primitive UI components come from **Shadcn UI** and live in `src/components/ui/`.
-
-### Available Components
-
-| Component       | Description                                          |
-| --------------- | ---------------------------------------------------- |
-| `Button`        | Multi-variant button (default, outline, ghost, etc.) |
-| `Input`         | Styled form input                                    |
-| `Label`         | Accessible form label                                |
-| `Dialog`        | Modal dialog                                         |
-| `Select`        | Dropdown select                                      |
-| `Checkbox`      | Accessible checkbox                                  |
-| `Avatar`        | User avatar with fallback                            |
-| `Dropdown Menu` | Context/dropdown menus                               |
-| `Accordion`     | Collapsible accordion panels                         |
-| And more...     | Run `npx shadcn add <component>` to add more         |
-
-### Adding a New Shadcn Component
-
-```bash
-npx shadcn add <component-name>
-# e.g.
-npx shadcn add sheet
-npx shadcn add calendar
-```
-
----
-
-## 🛠️ Developer Tooling
-
-### ESLint
-
-Configured in `eslint.config.mjs`. Extends `eslint-config-next`.
-
-```bash
-npm run lint
-```
-
-### Prettier
-
-Config in `.prettierrc`. Auto-formats on commit via lint-staged.
-
-```bash
-# Format all files manually
-npx prettier --write .
-```
-
-### Husky + Lint-staged
-
-Pre-commit hooks auto-run linting on staged files before every commit.
-
-Config in `.lintstagedrc.json` and `.lintstagedrc`.
-
-### Jest
-
-Unit and integration tests live in `src/tests/`.
-
-```bash
-npm run test         # Run all tests once
-npm run test:watch   # Run tests in watch mode
-```
-
-### TypeScript Type Checking
-
-```bash
-npm run type-check   # Runs tsc --noEmit
-```
-
----
-
-## 📜 Scripts Reference
-
-| Script      | Command              | Description                          |
-| ----------- | -------------------- | ------------------------------------ |
-| Development | `npm run dev`        | Start the dev server with Webpack    |
-| Build       | `npm run build`      | Create an optimized production build |
-| Start       | `npm run start`      | Start the production server          |
-| Lint        | `npm run lint`       | Run ESLint                           |
-| Test        | `npm run test`       | Run Jest tests                       |
-| Test Watch  | `npm run test:watch` | Run tests in watch mode              |
-| Type Check  | `npm run type-check` | TypeScript type validation           |
-| Commit      | `npm run commit`     | Interactive commit with Commitizen   |
-
----
-
-## 📝 Commit Convention
-
-This project enforces **Conventional Commits** via `Commitlint`. Every commit message must follow the format:
-
-```
-<type>: <subject>
-```
-
-### Allowed Types
-
-| Type       | When to Use                               |
-| ---------- | ----------------------------------------- |
-| `feat`     | A new feature                             |
-| `fix`      | A bug fix                                 |
-| `docs`     | Documentation changes only                |
-| `style`    | Code style / formatting (no logic change) |
-| `refactor` | Code refactoring (no feature or bug fix)  |
-| `test`     | Adding or updating tests                  |
-| `build`    | Build system or dependency changes        |
-| `chore`    | Maintenance tasks                         |
-| `ci`       | CI/CD configuration changes               |
-| `perf`     | Performance improvements                  |
-| `revert`   | Reverting a previous commit               |
-| `security` | Security-related changes                  |
-
-### Examples
-
-```bash
-feat: add user profile page
-fix: resolve token expiry loop on 401
-docs: update environment variable guide
-refactor: extract api calls into feature module
-```
-
-### Using Commitizen (Interactive)
-
-```bash
-npm run commit
-```
-
-This launches an interactive CLI to guide you through writing a valid commit message.
-
----
+- **Live Demo:** [https://ai-image-generate-v1.vercel.app/](https://ai-image-generate-v1.vercel.app/)
+- **Repository:** [https://github.com/RashedulHaqueRasel1/ai-image-generate](https://github.com/RashedulHaqueRasel1/ai-image-generate)
 
 ## 📄 License
 
-This project is a starter template. You are free to use, modify, and distribute it.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+---
+
+## 🧑‍💻 Author
+
+**Rashedul Haque Rasel**
+
+Built with ❤️ using Next.js, TypeScript, and Tailwind CSS.
+
+- **Email:** [rashedulhaquerasel1@gmail.com](mailto:rashedulhaquerasel1@gmail.com)
+- **Portfolio:** [https://rashedul-haque-rasel.vercel.app/](https://rashedul-haque-rasel.vercel.app/)
